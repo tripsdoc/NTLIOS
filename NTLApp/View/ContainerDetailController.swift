@@ -21,6 +21,7 @@ class ContainerDetailController: UIViewController {
     @IBOutlet weak var completeBtn: UIButton!
     
     @IBOutlet weak var navBar: UINavigationBar!
+    var containerID: String = ""
     var containerNumber: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,18 +73,30 @@ class ContainerDetailController: UIViewController {
         if #available(iOS 13.0, *) {
             let cameraCtrl = self.storyboard?.instantiateViewController(identifier: "cameraCtrl") as! CameraViewController
             cameraCtrl.modalPresentationStyle = .fullScreen
-            cameraCtrl.containerNumber = containerNumber
+            cameraCtrl.containerID = containerID
             cameraCtrl.imageType = "Cargo"
             self.present(cameraCtrl, animated: true, completion: nil)
         } else {
             let cameraCtrl = self.storyboard?.instantiateViewController(withIdentifier: "cameraCtrl") as! CameraViewController
-            cameraCtrl.containerNumber = containerNumber
+            cameraCtrl.containerID = containerID
             cameraCtrl.imageType = "Cargo"
             self.present(cameraCtrl, animated: true, completion: nil)
         }
     }
     
     @IBAction func didContainerBtnClick(_ sender: Any) {
+        if #available(iOS 13.0, *) {
+            let cameraCtrl = self.storyboard?.instantiateViewController(identifier: "cameraCtrl") as! CameraViewController
+            cameraCtrl.modalPresentationStyle = .fullScreen
+            cameraCtrl.containerID = containerID
+            cameraCtrl.imageType = "Container"
+            self.present(cameraCtrl, animated: true, completion: nil)
+        } else {
+            let cameraCtrl = self.storyboard?.instantiateViewController(withIdentifier: "cameraCtrl") as! CameraViewController
+            cameraCtrl.containerID = containerID
+            cameraCtrl.imageType = "Container"
+            self.present(cameraCtrl, animated: true, completion: nil)
+        }
     }
     
     

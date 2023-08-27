@@ -37,10 +37,6 @@ struct MultipartFormDataRequest {
         httpBody.append(dataFormField(named: name, data: data, mimeType: mimeType))
     }
     
-    func setToken(token: String) {
-        self.token = token
-    }
-    
     private func dataFormField(named name: String,
                                data: Data,
                                mimeType: String) -> Data {

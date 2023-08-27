@@ -80,12 +80,12 @@ class LoginController: UIViewController {
                                 userPreference.set(decodeLogin.fullName, forKey: ntlUserName)
                                 self.getBearerToken()
                             } catch let error{
+                                print(error)
                                 self.hideProgress()
                             }
                         }
                     } else {
                         self.hideProgress()
-                        print(data)
                     }
             }
             dataTask.resume()
@@ -137,12 +137,12 @@ class LoginController: UIViewController {
                                     UIApplication.shared.windows.first?.makeKeyAndVisible()
                                 }
                             } catch let error{
+                                print(error)
                                 self.hideProgress()
                             }
                         }
                     } else {
                         self.hideProgress()
-                        print(data)
                     }
             }
             dataTask.resume()

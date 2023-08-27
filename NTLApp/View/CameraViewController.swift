@@ -28,7 +28,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UIC
     var spinner: ProgressViewController!
     var progressBar: ProgressAlert!
     var uploader = FileUploader()
-    var containerNumber: String = ""
+    var containerID: String = ""
     var imageType: String = ""
     var countImage = 0
     
@@ -84,13 +84,23 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate, UIC
     @IBAction func doneBtnClick(_ sender: Any) {
         var photoNumber = "0"
         var mode = 0
+        switch imageType {
+            case "Cargo":
+                mode = 1
+            case "Container":
+                mode = 0
+            case "SendIn":
+                mode = 2
+            default:
+                mode = 0
+        }
         let dialog = UIAlertController(title: "Confirmation", message: "Confirm upload image?", preferredStyle: UIAlertController.Style.alert)
         dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
             self.progressBar.setProgress(0)
             self.progressBar.present(from: self)
             self.uploader = FileUploader()
             self.uploader.delegate = self
-            self.uploader.uploadFiles(containerNumber: self.containerNumber, photoNumber: photoNumber, mode: mode, mapImage: self.mapLocation)
+            self.uploader.uploadFiles(containerID: self.containerID, photoNumber: photoNumber, mode: mode, mapImage: self.mapLocation)
         }))
         dialog.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
             

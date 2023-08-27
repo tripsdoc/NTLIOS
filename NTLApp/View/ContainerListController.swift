@@ -143,15 +143,17 @@ extension ContainerListController: UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var containerNumber = filter[indexPath.row].containerNumber
+        let dataContainer = filter[indexPath.row]
         if #available(iOS 13.0, *) {
             let detailCtrl = self.storyboard?.instantiateViewController(identifier: "containerDetailCtrl") as! ContainerDetailController
             detailCtrl.modalPresentationStyle = .fullScreen
-            detailCtrl.containerNumber = containerNumber
+            detailCtrl.containerID = String(dataContainer.id)
+            detailCtrl.containerNumber = dataContainer.containerNumber
             self.present(detailCtrl, animated: true, completion: nil)
         } else {
             let detailCtrl = self.storyboard?.instantiateViewController(withIdentifier: "containerDetailCtrl") as! ContainerDetailController
-            detailCtrl.containerNumber = containerNumber
+            detailCtrl.containerID = String(dataContainer.id)
+            detailCtrl.containerNumber = dataContainer.containerNumber
             self.present(detailCtrl, animated: true, completion: nil)
         }
     }

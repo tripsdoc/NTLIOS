@@ -17,7 +17,7 @@ import UIKit
 class FileUploader {
     var mapImage = Array<String>()
     var photoNumber: String = ""
-    var containerNo: String = ""
+    var containerID: String = ""
     var uploadIndex: Int = -1
     var mode = 0
     var responses: Array<String>!
@@ -25,11 +25,11 @@ class FileUploader {
     var isCancel = false
     weak var delegate : FileUploaderListener? = nil
     
-    public func uploadFiles(containerNumber: String, photoNumber: String, mode: Int, mapImage: Array<String>) {
+    public func uploadFiles(containerID: String, photoNumber: String, mode: Int, mapImage: Array<String>) {
         self.mapImage = mapImage
         self.mode = mode
         self.photoNumber = photoNumber
-        self.containerNo = containerNumber
+        self.containerID = containerID
         self.uploadIndex = -1
         responses = Array<String>()
         uploadNext()
@@ -61,16 +61,15 @@ class FileUploader {
             let newImage = resizeImage(image: image, targetSize: CGSize.init(width: 1024, height: 768))
             let imageData = newImage.jpegData(compressionQuality: 0.75)!
             var request: MultipartFormDataRequest!
-            request.setToken(token: token)
             if mode == 0 || mode == 2 {
                 request = MultipartFormDataRequest(url: URL(string: BaseURL + "PhotoList/UploadPhotoContainer")!, token: token)
             } else {
                 request = MultipartFormDataRequest(url: URL(string: BaseURL + "PhotoList/UploadPhotoCargo")!, token: token)
             }
             
-            request.addTextField(named: "containerNumber", value: containerNo)
+            request.addTextField(named: "ContainerId", value: containerID)
             if mode == 1 {
-                request.addTextField(named: "photoNumber", value: photoNumber)
+                request.addTextField(named: "PhotoNo", value: photoNumber)
             }
             request.addDataField(named: "PhotoFile", data: imageData, mimeType: "img/jpeg")
             self.urlSession = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
